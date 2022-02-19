@@ -20,17 +20,21 @@ public class Gun : MonoBehaviour
 
     void Shoot()
     {
-        RaycastHit hit;
+        RaycastHit[] hits;
         flash.Play();
-        if(Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
+        hits = Physics.RaycastAll(fpsCam.transform.position, fpsCam.transform.forward, range);
+        foreach (RaycastHit hit in hits)
         {
-            Debug.Log(hit.transform.name);
-            Target target = hit.transform.GetComponent<Target>();
-            Rigidbody rb = hit.transform.GetComponent<Rigidbody>();
-            if (target != null)
+            if(hit.rigidbody != null)
             {
-                target.TakeDamage(damage);
-                rb.AddForce(transform.forward * hitForce, ForceMode.Impulse);
+                Debug.Log(hit.transform.name);
+                Target target = hit.transform.GetComponent<Target>();
+                Rigidbody rb = hit.transform.GetComponent<Rigidbody>();
+                if (target != null)
+                {
+                    target.TakeDamage(damage);
+                    rb.AddForce(transform.forward * hitForce, ForceMode.Impulse);
+                }
             }
         }
 
