@@ -18,7 +18,7 @@ public class PlayerCollisionManager : MonoBehaviour
         if (collision.collider.tag == "endgame_waypoint")
         {
             playerMovementController.enabled = false;
-            gameManager.GameOver(GameManager.EndGameState.WON);
+            gameManager.GameOver(GameManager.EndGameState.AT_FINISH_LINE);
         }
     }
 

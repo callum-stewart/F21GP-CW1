@@ -17,7 +17,7 @@ public class EndgameScript : MonoBehaviour
     {
         if (other.tag == player.tag)
         {
-            gameManager.GameOver(GameManager.EndGameState.WON);
+            gameManager.GameOver(GameManager.EndGameState.AT_FINISH_LINE);
         }
     }
 }

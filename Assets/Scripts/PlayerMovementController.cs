@@ -15,7 +15,7 @@ public class PlayerMovementController : MonoBehaviour
     public float jumpHeight = 3;
     public float maxFallingVelocity = -50f;
 
-    Vector3 velocity;
+    public Vector3 velocity;
     bool isGrounded = true;
     GameManager gameManager;
 
