@@ -4,22 +4,19 @@ using UnityEngine;
 
 public class PendulumSmack : MonoBehaviour
 {
-    private Vector3 currentDirection;
-    private Vector3 currentPosition;
-    private Vector3 previousPosition;
+    Rigidbody weightRb;
+    SwingPendulum parent;
+    public int forceOfImpact = 100;
     // Start is called before the first frame update
     void Start()
     {
-        currentPosition = transform.position;
+        weightRb = GetComponent<Rigidbody>();
+        parent = GetComponentInParent<SwingPendulum>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        previousPosition = currentPosition;
-        currentPosition = transform.position;
-        currentDirection = (currentPosition - previousPosition).normalized;
-
+       //Debug.Log("parent angle: " + parent.deflectionAngle);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,7 +24,11 @@ public class PendulumSmack : MonoBehaviour
         //sDebug.Log("onTriggerEnter triggered");
         if (other.attachedRigidbody != null)
         {
-            Debug.Log("velocity (x,y,z): (" + currentDirection.x +","+currentDirection.y+","+currentDirection.z+")");
+            int direction = (parent.swingDirection > 0) ? 1 : -1;
+            other.attachedRigidbody.AddForce(transform.right * direction * forceOfImpact, ForceMode.Impulse);
+            //Vector3 playerVelocity = other.attachedRigidbody.velocity;
+            //other.attachedRigidbody.velocity = new Vector3(playerVelocity.x + (forceOfImpact*direction), playerVelocity.y, playerVelocity.z);
+            Debug.Log("ball going: " + ((parent.swingDirection > 0) ? "left" : "right"));
         }
     }
 }

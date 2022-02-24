@@ -8,6 +8,8 @@ TagManager:
   - followPoint
   - slime
   - endgame_waypoint
+  - ground
+  - moving_platform
   layers:
   - Default
   - TransparentFX
@@ -16,7 +18,7 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
+  - Platform
   - 
   - 
   - 

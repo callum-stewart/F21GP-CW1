@@ -4,54 +4,88 @@ using UnityEngine;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    public CharacterController controller;
 
-    public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
+    [SerializeField]
+    float speed;
 
-    public float speed = 12f;
-    public float gravity = -9.81f;
-    public float jumpHeight = 3;
-    public float maxFallingVelocity = -50f;
+    [SerializeField]
+    float jumpForce;
 
-    public Vector3 velocity;
-    bool isGrounded = true;
-    GameManager gameManager;
+    [SerializeField]
+    float maxFallSpeed = -20; // Go faster than this and it is game over due to falling
 
-    // Start is called before the first frame update
+    private Rigidbody body;
+    private float vertical;
+    private float horizontal;
+    private bool isGrounded;
+    
+    private bool isOnPlatform;
+    private Rigidbody platform;
+    private GameManager gameManager;
+
     void Start()
     {
+        // Obtain the reference to our Rigidbody.
+        body = GetComponent<Rigidbody>();
         gameManager = FindObjectOfType<GameManager>();
+
     }
-
-    // Update is called once per frame
-    void Update()
+    // Fixed Update is called a fix number of frames per second.
+    void LateUpdate()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-       // Debug.Log(isGrounded);
-
-        if (isGrounded && velocity.y < 0)
+        vertical = Input.GetAxis("Vertical");
+        horizontal = Input.GetAxis("Horizontal");
+        //Debug.Log("isGrounded: " + isGrounded);
+        //Debug.Log("isOnPlatform:" + isOnPlatform);
+        if (Input.GetAxis("Jump") > 0)
         {
-            velocity.y = -2f;
+            if (isGrounded)
+            {
+                body.AddForce(transform.up * jumpForce);
+            }
         }
-        else if (velocity.y <= maxFallingVelocity)
+        Vector3 velocity = ((transform.forward * vertical) + (transform.right * horizontal)) * speed * Time.fixedDeltaTime;
+        velocity.y = body.velocity.y;
+        if (isOnPlatform)
+        {
+            velocity.x += platform.velocity.x;
+        }
+        body.velocity = velocity;
+        if (velocity.y <= maxFallSpeed)
         {
             gameManager.GameOver(GameManager.EndGameState.FELL);
         }
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
 
-        Vector3 move = transform.right * x + transform.forward * z;
-        controller.Move(move * speed * Time.deltaTime);
-
-        if (Input.GetButtonDown("Jump") && isGrounded)
+    }
+    // This function is a callback for when an object with a collider collides with this objects collider.
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("onTriggerEnter entered: " + collision.gameObject.name);
+        if (collision.gameObject.tag == "ground")
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            isGrounded = true;
         }
 
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
-        //Debug.Log(velocity.y);
+        if (collision.gameObject.tag == "moving_platform")
+        {
+            isOnPlatform = true;
+            isGrounded = true;
+            platform = collision.collider.attachedRigidbody;
+        }
+    }
+    // This function is a callback for when the collider is no longer in contact with a previously collided object.
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "ground")
+        {
+            isGrounded = false;
+        }
+
+        if (collision.gameObject.tag == "moving_platform")
+        {
+            isOnPlatform = false;
+            isGrounded = false;
+            platform = null;
+        }
     }
 }

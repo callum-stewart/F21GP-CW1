@@ -59,8 +59,8 @@ public class LemmingController : MonoBehaviour
             return;
         }
 
-        agent.destination = patrolPoints[nextDest++].transform.position;
-        nextDest %= patrolPoints.Length;
+        //agent.destination = patrolPoints[nextDest++].transform.position;
+        //nextDest %= patrolPoints.Length;
     }
 
     void Patrol()

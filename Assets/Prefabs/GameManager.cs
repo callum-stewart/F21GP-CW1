@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public List<GameObject> lemmings = new List<GameObject>();
     public int maxDeadLemmings = 3;
-    private int lemmingCount;
+    public int lemmingCount;
     private bool isGameOver = false;
     public enum EndGameState {AT_FINISH_LINE, FELL, LEMMINGS_LEFT_BEHIND, TOO_MANY_DEAD_LEMMINGS};
     // Start is called before the first frame update

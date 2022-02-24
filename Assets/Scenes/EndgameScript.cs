@@ -15,7 +15,7 @@ public class EndgameScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == player.tag)
+        if (other.tag == "player")
         {
             gameManager.GameOver(GameManager.EndGameState.AT_FINISH_LINE);
         }

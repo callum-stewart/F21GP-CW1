@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour
     public float lookRadius = 50f;
     public float killRadius = 4f;
     LivesLeft lifeBar;
+    public static int killCount = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -77,6 +78,11 @@ public class EnemyController : MonoBehaviour
         Debug.Log("Lemming GO: " + currTarget.gameObject);
         Destroy(currTarget.gameObject, 2f);
         lifeBar.removeLife();
+        EnemyController.killCount++;
+        if (killCount >= 3)
+        {
+            gameManager.GameOver(GameManager.EndGameState.TOO_MANY_DEAD_LEMMINGS);
+        }
     }
 
     private void OnDrawGizmosSelected()
