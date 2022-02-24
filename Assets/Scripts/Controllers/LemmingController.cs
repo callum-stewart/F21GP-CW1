@@ -102,7 +102,8 @@ public class LemmingController : MonoBehaviour
                 }
             }
         }
-        agent.SetDestination(currentFollowPoint.transform.position);
+        if (currentFollowPoint != null)
+            agent.SetDestination(currentFollowPoint.transform.position);
     }
 
     void Abandoned()

@@ -4250,15 +4250,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6577154046830058838, guid: 365355681c54e442a97793ea55ba847c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 34
+      value: 37.5
       objectReference: {fileID: 0}
     - target: {fileID: 6577154046830058838, guid: 365355681c54e442a97793ea55ba847c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -16.5
+      value: -18.5
       objectReference: {fileID: 0}
     - target: {fileID: 6577154046830058838, guid: 365355681c54e442a97793ea55ba847c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -99
+      value: -107
       objectReference: {fileID: 0}
     - target: {fileID: 6577154046830058838, guid: 365355681c54e442a97793ea55ba847c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4894,6 +4894,10 @@ PrefabInstance:
     - target: {fileID: 8101384987765579344, guid: 9e9203a75afb44c0b89fd569c064ed42, type: 3}
       propertyPath: m_TagString
       value: moving_platform
+      objectReference: {fileID: 0}
+    - target: {fileID: 8101384987765579345, guid: 9e9203a75afb44c0b89fd569c064ed42, type: 3}
+      propertyPath: platformSpeed
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8101384987765579346, guid: 9e9203a75afb44c0b89fd569c064ed42, type: 3}
       propertyPath: m_RootOrder
@@ -6530,7 +6534,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh19598
+  m_Name: pb_Mesh96402
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
