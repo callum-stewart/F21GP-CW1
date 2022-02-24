@@ -9,7 +9,7 @@ public class PlayerMovementController : MonoBehaviour
     float speed;
 
     [SerializeField]
-    float jumpForce;
+    float jumpSpeed = 4;
 
     [SerializeField]
     float maxFallSpeed = -20; // Go faster than this and it is game over due to falling
@@ -37,15 +37,18 @@ public class PlayerMovementController : MonoBehaviour
         horizontal = Input.GetAxis("Horizontal");
         //Debug.Log("isGrounded: " + isGrounded);
         //Debug.Log("isOnPlatform:" + isOnPlatform);
+        Vector3 jumpVelocity = new Vector3(0,0,0);
         if (Input.GetAxis("Jump") > 0)
         {
+           
             if (isGrounded)
             {
-                body.AddForce(transform.up * jumpForce);
+                //body.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+                jumpVelocity.y += jumpSpeed;
             }
         }
         Vector3 velocity = ((transform.forward * vertical) + (transform.right * horizontal)) * speed * Time.fixedDeltaTime;
-        velocity.y = body.velocity.y;
+        velocity.y = body.velocity.y + jumpVelocity.y;
         if (isOnPlatform)
         {
             velocity.x += platform.velocity.x;
